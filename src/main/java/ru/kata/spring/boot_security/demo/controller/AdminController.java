@@ -5,26 +5,21 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.util.ConvertToUser;
 import ru.kata.spring.boot_security.demo.dto.UserDto;
-import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 
 @Controller
 @RequestMapping("/admin")
-@PreAuthorize("hasRole(ADMIN)")
 public class AdminController {
 
     private final UserService userService;
-    private ConvertToUser convertToUser;
     private RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService, ConvertToUser convertToUser, RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.convertToUser = convertToUser;
         this.roleService = roleService;
     }
 
@@ -38,21 +33,19 @@ public class AdminController {
 
     @PostMapping("/newUser")
     public String createUser(@ModelAttribute UserDto userDto) {
-        User user = convertToUser.toUser(userDto);
-        userService.addUser(user);
+        userService.addUser(userDto);
         return "redirect:/admin";
     }
 
     @PostMapping("/update/{id}")
     public String editUser(@PathVariable Long id, @ModelAttribute UserDto userDto) {
-        User user = convertToUser.toUser(userDto, id);
-        userService.updateUser(user);
+        userService.updateUser(userDto, id);
         return "redirect:/admin";
     }
 
     @GetMapping("/load/{id}")
     public String loadUserForUpdate(ModelMap modelMap, @PathVariable Long id) {
-        UserDto userDto = convertToUser.convertToUserMapper(id);
+        UserDto userDto = userService.getUserById(id);
         modelMap.addAttribute("userMap", userDto);
         modelMap.addAttribute("roleForUser", roleService.getRoles());
         return "admin_page";

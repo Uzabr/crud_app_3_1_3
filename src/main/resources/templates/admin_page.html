@@ -412,6 +412,7 @@
                 </div>
             </div>
         </div>
+        <!-- В разделе User information-page -->
         <div id="tab-panel2" class="tab-panel">
             <h1 style="margin-left: 50px; margin-top: 20px;">User information-page</h1>
             <div class="inner-tabs-container">
@@ -431,15 +432,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="user : ${users}">
-                            <td th:text="${user.id}"></td>
-                            <td th:text="${user.username}"></td>
-                            <td th:text="${user.firstName}"></td>
-                            <td th:text="${user.lastName}"></td>
-                            <td th:text="${user.age}"></td>
+                        <!-- Заменяем цикл на отображение только первого пользователя -->
+                        <tr th:if="${users}">
+                            <td th:text="${users[0].id}"></td>
+                            <td th:text="${users[0].username}"></td>
+                            <td th:text="${users[0].firstName}"></td>
+                            <td th:text="${users[0].lastName}"></td>
+                            <td th:text="${users[0].age}"></td>
                             <td>
-                                <span th:each="role : ${user.role}"
-                                      th:text="${#strings.replace(role.name, 'ROLE_', '')} + ' '"></span>
+                        <span th:each="role : ${users[0].role}"
+                              th:text="${#strings.replace(role.name, 'ROLE_', '')} + ' '"></span>
                             </td>
                         </tr>
                         </tbody>
