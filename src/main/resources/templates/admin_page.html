@@ -125,6 +125,15 @@
             margin-left: -15px;
             margin-right: -15px;
         }
+        .user-data-container input[readonly] {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            cursor: not-allowed;
+        }
+
+        .user-data-container .form-floating {
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -304,16 +313,57 @@
                                             Delete
                                         </button>
 
+                                        <!-- Модальное окно удаления с данными пользователя -->
                                         <div th:id="'deleteModal_' + ${user.id}" class="modal fade" tabindex="-1">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Delete User</h5>
-                                                        <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal"></button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Are you sure you want to delete user <strong th:text="${user.username}"></strong>?</p>
+                                                        <p>Are you sure you want to delete this user?</p>
+
+                                                        <!-- Отображение данных пользователя -->
+                                                        <div class="user-data-container">
+                                                            <div class="form-floating mb-3">
+                                                                <h5>ID</h5>
+                                                                <input type="text" class="form-control"
+                                                                       th:value="${user.id}" readonly>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <h5>Username</h5>
+                                                                <input type="text" class="form-control"
+                                                                       th:value="${user.username}" readonly>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <h5>First Name</h5>
+                                                                <input type="text" class="form-control"
+                                                                       th:value="${user.firstName}" readonly>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <h5>Last Name</h5>
+                                                                <input type="text" class="form-control"
+                                                                       th:value="${user.lastName}" readonly>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <h5>Age</h5>
+                                                                <input type="number" class="form-control"
+                                                                       th:value="${user.age}" readonly>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <h5>Roles</h5>
+                                                                <input type="text" class="form-control"
+                                                                th:value="${#strings.replace(user.role, 'ROLE_', '')} + ' '" readonly>
+
+                                                            </div>
+                                                        </div>
+
                                                         <form th:action="@{/admin/delete/{id}(id=${user.id})}" method="post">
                                                             <input type="hidden" name="_method" value="delete">
                                                             <div class="modal-footer">

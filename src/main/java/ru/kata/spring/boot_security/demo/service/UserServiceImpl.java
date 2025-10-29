@@ -30,7 +30,12 @@ public class UserServiceImpl implements UserService {
     public void addUser(UserDto userDto) {
         Set<Role> roles = new HashSet<>();
         User user = new User();
-        roles.add(roleService.getRoleById(userDto.getRoleId()));
+        Role role = roleService.getRoleById(userDto.getRoleId());
+        roles.add(role);
+        if (role.getName().equals("ROLE_ADMIN")) {
+            Role userRole = roleService.getRoleByName("ROLE_USER");
+            roles.add(userRole);
+        }
         user.setUsername(userDto.getUsername());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -47,9 +52,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(UserDto userDto, Long id) {
         Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getRoleById(userDto.getRoleId()));
         userDto.setId(id);
         User user = userDao.getUserById(id);
+        Role role = roleService.getRoleById(userDto.getRoleId());
+        roles.add(role);
+        if (role.getName().equals("ROLE_ADMIN")) {
+            Role userRole = roleService.getRoleByName("ROLE_USER");
+            roles.add(userRole);
+        }
         user.setUsername(userDto.getUsername());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
