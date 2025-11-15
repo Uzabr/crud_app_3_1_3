@@ -193,10 +193,10 @@
                                 </div>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">Username</th>
                                     <th scope="col">First Name</th>
                                     <th scope="col">Last Name</th>
                                     <th scope="col">Age</th>
+                                    <th scope="col">Email</th>
                                     <th scope="col">Role</th>
                                     <th scope="col">Edit</th>
                                     <th scope="col">Delete</th>
@@ -205,10 +205,10 @@
                                 <tbody>
                                 <tr th:each="user : ${users}">
                                     <td th:text="${user.id}"></td>
-                                    <td th:text="${user.username}"></td>
                                     <td th:text="${user.firstName}"></td>
                                     <td th:text="${user.lastName}"></td>
                                     <td th:text="${user.age}"></td>
+                                    <td th:text="${user.username}"></td>
                                     <td>
                                         <span th:each="role : ${user.role}"
                                               th:text="${#strings.replace(role.name, 'ROLE_', '')} + ' '"></span>
@@ -242,14 +242,6 @@
                                                             </div>
 
                                                             <div class="form-floating mb-3">
-                                                                <h5>Username</h5>
-                                                                <input type="text" class="form-control" name="username"
-                                                                       th:value="${user.username}"
-                                                                       placeholder="username"
-                                                                       required>
-                                                            </div>
-
-                                                            <div class="form-floating mb-3">
                                                                 <h5>First Name</h5>
                                                                 <input type="text" class="form-control" name="firstName"
                                                                        th:value="${user.firstName}"
@@ -270,6 +262,14 @@
                                                                 <input type="number" class="form-control" name="age"
                                                                        th:value="${user.age}" placeholder="age"
                                                                        min="1" max="100"
+                                                                       required>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <h5>Email</h5>
+                                                                <input type="text" class="form-control" name="username"
+                                                                       th:value="${user.username}"
+                                                                       placeholder="email"
                                                                        required>
                                                             </div>
 
@@ -333,12 +333,6 @@
                                                             </div>
 
                                                             <div class="form-floating mb-3">
-                                                                <h5>Username</h5>
-                                                                <input type="text" class="form-control"
-                                                                       th:value="${user.username}" readonly>
-                                                            </div>
-
-                                                            <div class="form-floating mb-3">
                                                                 <h5>First Name</h5>
                                                                 <input type="text" class="form-control"
                                                                        th:value="${user.firstName}" readonly>
@@ -354,6 +348,12 @@
                                                                 <h5>Age</h5>
                                                                 <input type="number" class="form-control"
                                                                        th:value="${user.age}" readonly>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <h5>Email</h5>
+                                                                <input type="text" class="form-control"
+                                                                       th:value="${user.username}" readonly>
                                                             </div>
 
                                                             <div class="form-floating mb-3">
@@ -397,15 +397,6 @@
                                           class="w-100 mx-auto" style="max-width: 400px; text-align: center">
 
                                         <div class="mb-3">
-                                            <h5 for="username" class="form-label">Username</h5>
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="username"
-                                                   th:field="*{username}"
-                                                   placeholder="username" required>
-                                        </div>
-
-                                        <div class="mb-3">
                                             <h5 for="firstName" class="form-label">First Name</h5>
                                             <input type="text"
                                                    class="form-control"
@@ -431,6 +422,15 @@
                                                    th:field="*{age}"
                                                    min="1" max="100"
                                                    required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <h5 for="username" class="form-label">Email</h5>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="username"
+                                                   th:field="*{username}"
+                                                   placeholder="email" required>
                                         </div>
 
                                         <div class="mb-3">
@@ -474,10 +474,10 @@
                         </div>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Username</th>
                             <th scope="col">First Name</th>
                             <th scope="col">Last Name</th>
                             <th scope="col">Age</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Role</th>
                         </tr>
                         </thead>
@@ -485,10 +485,10 @@
                         <!-- Заменяем цикл на отображение только первого пользователя -->
                         <tr th:if="${users}">
                             <td th:text="${users[0].id}"></td>
-                            <td th:text="${users[0].username}"></td>
                             <td th:text="${users[0].firstName}"></td>
                             <td th:text="${users[0].lastName}"></td>
                             <td th:text="${users[0].age}"></td>
+                            <td th:text="${users[0].username}"></td>
                             <td>
                         <span th:each="role : ${users[0].role}"
                               th:text="${#strings.replace(role.name, 'ROLE_', '')} + ' '"></span>
