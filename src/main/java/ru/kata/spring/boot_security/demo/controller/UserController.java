@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping
-    public String userPage(ModelMap modelMap) {
+    public String viewUserPage(ModelMap modelMap) {
         UserDetails user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         modelMap.addAttribute("user", user);
         modelMap.addAttribute("userlist", userService.getAllUsers());
